@@ -4,6 +4,53 @@ const
 
 
 module.exports = {
+  ticket: {
+    async open(client, id, ticket) {
+      let tickets = await client.tickets.get(id, 'openTickets', []);
+      tickets = tickets.concat(ticket);
+      await client.tickets.set(id, 'openTickets', tickets);
+    },
+    async close(client, id, ticket, closeData) {
+      let openTickets = await client.tickets.get(id, 'openTickets', []);
+      let closedTickets = await client.tickets.get(id, 'closedTickets', []);
+  
+      const t = openTickets.find(t => t.channel === ticket.channel);
+      if (!openTickets.length || !t) return false;
+  
+      openTickets = client.util.removeItemOnce(openTickets, t);
+      await client.tickets.set(id, 'openTickets', openTickets);
+  
+      t.closed = true;
+      t.closedReason = closeData.closeReason;
+      t.closedBy = closeData.closedBy;
+      closedTickets = closedTickets.concat(ticket);
+      await client.tickets.set(id, 'closedTickets', closedTickets);
+      return true;
+    },
+  
+    async edit(client, id, oldTicket, newTicket) {
+      let tickets = await client.tickets.get(id, 'openTickets', []);
+      if(!tickets.length) return false;
+      tickets = client.util.removeItemOnce(tickets, oldTicket);
+      tickets = tickets.concat(newTicket);
+      await client.tickets.set(id, 'openTickets', tickets);
+      return true;
+    }
+  },
+  async addReactions(msg, ...emojis) {
+    for (const emoji of emojis) {
+      await msg.react(emoji);
+    }
+    return msg;
+  },
+
+  removeItemOnce(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  },
   async haste(str) {
     let haste, i = 0;
     while (!haste && i < config.bins.length) {
