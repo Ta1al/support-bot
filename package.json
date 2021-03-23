@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Ta1al/ps-support#readme",
   "dependencies": {
+    "common-tags": "^1.8.0",
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",

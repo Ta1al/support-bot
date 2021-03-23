@@ -7,7 +7,7 @@ const
     MongooseProvider
   } = require('discord-akairo'),
   config = require('../config.json'),
-  { Schema, model } = require('mongoose');
+  { Schema, model, connect } = require('mongoose');
 
 class BotClient extends AkairoClient {
   constructor() {
@@ -70,15 +70,22 @@ class BotClient extends AkairoClient {
   
     const settingsModel = model('model', schema);
     this.db = new MongooseProvider(settingsModel);
+
+    this.functions = require('./functions');
   }
 
   async login(token) {
-    await this.settings.init();
+    await connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    });
+    await this.db.init();
+    console.info('Connected to the Database.');
     return super.login(token);
   }
   
 }
 
 const client = new BotClient();
-client.functions = require('./functions');
 client.login(process.env.TOKEN);
