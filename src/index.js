@@ -31,12 +31,24 @@ class BotClient extends AkairoClient {
       argumentDefaults: {
         prompt: Object.assign(config.commandPrompt, {
           modifyStart: (msg, str) => `${msg.author}, ${str}\n\n${config.modifyCommandPrompt.start}`,
-          modifyRetry: (msg, str) => `${msg.author}, ${str}\n\n${config.modifyCommandPrompt.retry}`
+          modifyRetry: (msg, str) => `${msg.author}, ${str}\n\n${config.modifyCommandPrompt.retry}`,
+          modifyEnded: (msg, str) => `${msg.author}, ${str}`,
+          modifyTimeout: (msg, str) => `${msg.author}, ${str}`,
+          modifyCancel: (msg, str) => `${msg.author}, ${str}`
         }),
         otherwise: config.strings.ArgumentParsingFailure
       }
     });
     this.commandHandler.useListenerHandler(this.listenerHandler);
+    this.commandHandler.resolver.addTypes({
+      qr: async (msg, str) => {
+        if (!str) return null;
+        const qrs = await msg.client.db.get(msg.guild.id, 'qr', []);
+        const result = qrs.find(q => q.name === str.toLowerCase() || q.aliases.includes(str.toLowerCase()));
+        if (result) return result;
+        return null;
+      }
+    });
 
     this.listenerHandler = new ListenerHandler(this, {
       directory: './src/listeners/'
@@ -67,7 +79,7 @@ class BotClient extends AkairoClient {
         require: true
       }
     }, { minimize: false });
-  
+
     const settingsModel = model('model', schema);
     this.db = new MongooseProvider(settingsModel);
 
@@ -84,7 +96,7 @@ class BotClient extends AkairoClient {
     console.info('Connected to the Database.');
     return super.login(token);
   }
-  
+
 }
 
 const client = new BotClient();
