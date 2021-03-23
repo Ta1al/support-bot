@@ -22,7 +22,7 @@ class BotClient extends AkairoClient {
     });
 
     this.commandHandler = new CommandHandler(this, {
-      directory: './src/commands',
+      directory: './src/commands/',
       prefix: config.prefix,
       aliasReplacement: /-/g,
       commandUtil: true,
@@ -39,11 +39,11 @@ class BotClient extends AkairoClient {
     this.commandHandler.useListenerHandler(this.listenerHandler);
 
     this.listenerHandler = new ListenerHandler(this, {
-      directory: './src/listeners'
+      directory: './src/listeners/'
     });
 
     this.inhibitorHandler = new InhibitorHandler(this, {
-      directory: './src/inhibitors'
+      directory: './src/inhibitors/'
     });
 
     this.listenerHandler.setEmitters({
@@ -88,4 +88,8 @@ class BotClient extends AkairoClient {
 }
 
 const client = new BotClient();
-client.login(process.env.TOKEN);
+client
+  .on('error', err => console.error('Client error:', err))
+  .on('warn', info => console.warn('Warning:', info))
+  .on('rateLimit', rateLimitInfo => console.warn('Rate limited:', JSON.stringify(rateLimitInfo)))
+  .login(process.env.TOKEN).then(() => console.info('Logged in'));
