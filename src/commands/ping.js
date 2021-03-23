@@ -3,6 +3,8 @@ const { Command } = require('discord-akairo');
 class PingCommand extends Command {
   constructor() {
     super('ping', {
+      category: 'Utility',
+      description: 'Get the bot response time, latency and uptime.',
       aliases: ['ping', 'latency', 'uptime', 'ut'],
       cooldown: 3e3
     });
