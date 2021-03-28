@@ -61,7 +61,7 @@ module.exports = class ascCommand extends Command {
         logChannel: lc.id
       }
     );
-    await this.client.settings.set(msg.guild.id, 'sc', scs);
+    await this.client.db.set(msg.guild.id, 'sc', scs);
     const embed = this.client.util.embed()
       .setColor(config.color)
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())

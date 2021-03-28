@@ -34,7 +34,7 @@ module.exports = class rscCommand extends Command {
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(`**Support Channel:** <#${sc.supportChannel}>\n**Ticket Category:** <#${sc.ticketCategory}>\n**Logs Channel:** <#${sc.logChannel}>`);
     const m = await msg.reply('⚠ Are you sure you want to remove this support channel?', embed);
-    await this.client.util.addReactions(m, '✅', '❌');
+    await this.client.functions.addReactions(m, '✅', '❌');
 
     const filter = (reaction, user) => {
       return ['✅', '❌'].includes(reaction.emoji.name) && user.id === msg.author.id;

@@ -10,7 +10,7 @@ module.exports = class createTicketCommand extends Command {
         'MANAGE_CHANNELS'
       ],
       aliases: ['createTicket', 'ticket'],
-      prefix: '-',
+      prefix: config.ticketPrefix,
       description: {
         content: 'Create a ticket for a certain user.',
         usage: '<user> [reason]',
@@ -101,7 +101,7 @@ module.exports = class createTicketCommand extends Command {
     guildTickets = guildTickets.concat({ channel: chnl.id, user: member.id }); 
     await this.client.db.set(msg.guild.id, 'Tickets', guildTickets);
     
-    await this.client.ticket.open(this.client, member.id, newTicket);
+    await this.client.functions.ticket.open(this.client, member.id, newTicket);
     return m.edit(`${msg.author}, ✅ Ticket created for ${member.user.tag}. | **Status:** Open`);
   }
 };

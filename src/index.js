@@ -50,7 +50,7 @@ class BotClient extends AkairoClient {
       },
       sc: async (m, str) => {
         if (!str) return null;
-        const scs = await m.client.db.get(m.guild.id, 'supportChannels', []);
+        const scs = await m.client.db.get(m.guild.id, 'sc', []);
         if (!scs.length) return null;
         const chnl = await m.client.util.resolveChannel(str, m.guild.channels.cache);
         if (!chnl) return null;

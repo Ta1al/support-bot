@@ -1,4 +1,4 @@
-const { Command } = require('discord-akairo');
+const { Command } = require('discord-akairo'), config = require('../../../../config.json');
 module.exports = class closeTicketCommand extends Command {
   constructor() {
     super('closeTicket', {
@@ -6,7 +6,7 @@ module.exports = class closeTicketCommand extends Command {
       category: 'Ticket',
       aliases: ['closeTicket', 'close'],
       userPermissions: 'MANAGE_MESSAGES',
-      prefix: '-',
+      prefix: config.ticketPrefix,
       clientPermissions: [
         'EMBED_LINKS',
         'MANAGE_CHANNELS'
@@ -37,7 +37,7 @@ module.exports = class closeTicketCommand extends Command {
     const typeResolver = this.handler.resolver.type('sc');
     const sch = await typeResolver(msg, msg.channel.parentID);
     if (!sch) return msg.reply('❌ This ticket for a moved to a different category, unable to close.');
-    const guildTickets = await this.client.settings.get(msg.guild.id, 'Tickets', []);
+    const guildTickets = await this.client.db.get(msg.guild.id, 'Tickets', []);
     if (!guildTickets.length) return notTicketChannel(msg);
     const gT = guildTickets.find(a => a.channel === msg.channel.id);
     if (!gT) return notTicketChannel(msg);
@@ -55,12 +55,12 @@ module.exports = class closeTicketCommand extends Command {
     msgs.forEach(m => arr.push(`[${m.createdAt.toUTCString()}] ${m.author.tag}(${m.author.id}): ${m.content}${m.attachments.length > 0 ? `\n\nAttachments: ${m.attachments.map(a => a.url).join('\n')}` : ''}${m.embeds.length > 0 ? `\n\nEmbed: ${m.embeds.map(e => `${e.title}\n${e.description}\n${e.fields.map(f => `${f.name} : ${f.value}`).join('\n')}`).join('\n')}` : ''}`));
     arr.sort();
     const log = reas.concat(arr);
-    const haste = await this.client.util.haste(log.join('\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n'));
+    const haste = await this.client.functions.haste(log.join('\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n'));
     const oldTicket = ticket;
     ticket.closed = true;
     ticket.closedBy = msg.author.id;
     ticket.closeReason = reason;
-    await this.client.ticket.close(this.client, gT.user, oldTicket, ticket);
+    await this.client.functions.ticket.close(this.client, gT.user, oldTicket, ticket);
     await logChannel.send(`Ticket closed by ${msg.author.tag} (${msg.author.id})\n**Info**:\n${msg.channel.topic}\n**Question/Issue:** ${ticket.reason}\n**Closing Reason**: ${reason}\n**Invite:** ${ticket.invite}\n**Log**: ${haste}`);
     const sc = msg.client.channels.cache.get(sch.supportChannel);
     if (sc) {

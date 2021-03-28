@@ -17,7 +17,7 @@ module.exports = {
       const t = openTickets.find(t => t.channel === ticket.channel);
       if (!openTickets.length || !t) return false;
   
-      openTickets = client.util.removeItemOnce(openTickets, t);
+      openTickets = client.functions.removeItemOnce(openTickets, t);
       await client.tickets.set(id, 'openTickets', openTickets);
   
       t.closed = true;
@@ -31,7 +31,7 @@ module.exports = {
     async edit(client, id, oldTicket, newTicket) {
       let tickets = await client.tickets.get(id, 'openTickets', []);
       if(!tickets.length) return false;
-      tickets = client.util.removeItemOnce(tickets, oldTicket);
+      tickets = client.functions.removeItemOnce(tickets, oldTicket);
       tickets = tickets.concat(newTicket);
       await client.tickets.set(id, 'openTickets', tickets);
       return true;
