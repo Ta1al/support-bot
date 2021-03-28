@@ -2,7 +2,8 @@ const { Command } = require('discord-akairo'), config = require('../../../config
 module.exports = class rscCommand extends Command {
   constructor() {
     super('rsc', {
-      category: 'Support Channel',
+      channel: 'guild',
+      category: 'Support Channels',
       aliases: ['remove-support-channel', 'rsc'],
       userPermissions: 'MANAGE_MESSAGES',
       clientPermissions: 'EMBED_LINKS',

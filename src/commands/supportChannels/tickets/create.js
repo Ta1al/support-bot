@@ -1,7 +1,8 @@
-const { Command } = require('discord-akairo'), config = require('../../../config.json');
+const { Command } = require('discord-akairo'), config = require('../../../../config.json');
 module.exports = class createTicketCommand extends Command {
   constructor() {
     super('createTicket', {
+      channel: 'guild',
       category: 'Ticket',
       userPermissions: 'MANAGE_MESSAGES',
       clientPermissions: [

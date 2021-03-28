@@ -3,7 +3,7 @@ module.exports = class uqrCommand extends Command {
   constructor() {
     super('uqr', {
       channel: 'guild',
-      category: 'Quick Response',
+      category: 'Quick Responses',
       aliases: ['use-quick-response', 'uqr'],
       description: {
         content: 'Use a quick response',

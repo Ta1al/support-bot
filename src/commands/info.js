@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const os = require('os');
-const packagee = require('../../../../package.json');
+const packagee = require('../../package.json');
 const version = packagee.version;
 const djs = packagee.dependencies['discord.js'];
 module.exports = class info extends Command {

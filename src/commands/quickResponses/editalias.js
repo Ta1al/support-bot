@@ -2,7 +2,8 @@ const { Command } = require('discord-akairo'), config = require('../../../config
 class eqraCommand extends Command {
   constructor() {
     super('eqra', {
-      category: 'Quick Response',
+      category: 'Quick Responses',
+      channel: 'guild',
       userPermissions: 'MANAGE_MESSAGES',
       clientPermissions: 'EMBED_LINKS',
       aliases: ['edit-quick-response-alias', 'eqra'],

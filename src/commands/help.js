@@ -27,7 +27,7 @@ class HelpCommand extends Command {
 
   async exec(message, { command, cancel }) {
     if (!command) return this.execCommandList(message);
-    if ((message.member && !message.member.hasPermission(command.userPermissions)) && (command.ownerOnly === true ? message.author.id === this.client.ownerID : true)) return;
+    if (!checkPermissions(message, command)) return message.react('❌');
     const prefix = command.prefix ? command.prefix : message.util.parsed.prefix;
     const description = Object.assign({
       content: 'No description available.',
@@ -74,8 +74,8 @@ class HelpCommand extends Command {
       const a = [];
       let b;
       c.sort((x, y) => (x.aliases[0] || x.id).length - (y.aliases[0] || y.id).length).forEach(v => {
-        if (message.member.hasPermission(v.userPermissions) && (v.ownerOnly === true ? message.author.id === '462870395314241537' : true)) {
-          a.push(`\`${v.id === 'dm' ? ' ' : v.aliases[0]}\``);
+        if (checkPermissions(message, v)) {
+          a.push(`\`${v.aliases[0]}\``);
           b = v.categoryID.toUpperCase();
         }
       });
@@ -86,6 +86,13 @@ class HelpCommand extends Command {
 
     return undefined;
   }
+}
+
+function checkPermissions(msg, cmd) {
+  if (msg.member ? msg.member.hasPermission(cmd.userPermissions) : true &&
+    (cmd.ownerOnly === true ? msg.author.id === config.owner : true) &&
+    (cmd.channel === 'guild' && !msg.member ? false : true)) return true;
+  return false;
 }
 
 module.exports = HelpCommand;

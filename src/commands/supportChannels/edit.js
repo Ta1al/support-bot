@@ -2,6 +2,7 @@ const { Command, Argument } = require('discord-akairo'), config = require('../..
 module.exports = class escCommand extends Command {
   constructor() {
     super('esc', {
+      channel: 'guild',
       category: 'Support Channels',
       aliases: ['edit-support-channel', 'esc'],
       description: {

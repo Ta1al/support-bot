@@ -2,6 +2,7 @@ const { Command, Argument } = require('discord-akairo'), config = require('../..
 module.exports = class ascCommand extends Command {
   constructor() {
     super('asc', {
+      channel: 'guild',
       category: 'Support Channels',
       userPermissions: 'MANAGE_MESSAGES',
       clientPermissions: 'EMBED_LINKS',

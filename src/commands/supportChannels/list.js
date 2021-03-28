@@ -2,7 +2,8 @@ const { Command } = require('discord-akairo'), config = require('../../../config
 module.exports = class listscCommand extends Command {
   constructor() {
     super('listsc', {
-      category: 'Support Channel',
+      channel: 'guild',
+      category: 'Support Channels',
       userPermissions: 'MANAGE_MESSAGES',
       clientPermissions: 'EMBED_LINKS',
       aliases: ['list-support-channels', 'lsc'],
