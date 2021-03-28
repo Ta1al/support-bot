@@ -79,7 +79,7 @@ class HelpCommand extends Command {
           b = v.categoryID.toUpperCase();
         }
       });
-      if (a.length > 0) embed.addField(b, a.join(' '), true);
+      if (a.length > 0) embed.addField(b, a.join(' '));
     });
 
     await message.channel.send({ embed });
@@ -89,12 +89,10 @@ class HelpCommand extends Command {
 }
 
 function checkPermissions(msg, cmd) {
-  console.log(cmd.ownerOnly ? msg.author.id === config.owner : true);
   if (
     (msg.member ? msg.member.hasPermission(cmd.userPermissions) : true) &&
     (cmd.ownerOnly ? msg.author.id === config.owner : true) &&
-    (cmd.channel === 'guild' && !msg.member ? false : true)
-  ) return true;
+    (cmd.channel === 'guild' && !msg.member ? false : true)) return true;
   return false;
 }
 
