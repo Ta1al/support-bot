@@ -4,6 +4,8 @@ module.exports = class escCommand extends Command {
     super('esc', {
       channel: 'guild',
       category: 'Support Channels',
+      clientPermissions: 'EMBED_LINKS',
+      userPermissions: 'MANAGE_MESSAGES',
       aliases: ['edit-support-channel', 'esc'],
       description: {
         content: 'Edit a support channel',

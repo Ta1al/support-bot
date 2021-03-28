@@ -3,6 +3,7 @@ module.exports = class rqrCommand extends Command {
   constructor() {
     super('rqr', {
       channel: 'guild',
+      userPermissions: 'MANAGE_MESSAGES',
       category: 'Quick Responses',
       aliases: ['remove-quick-response', 'rqr', 'dqr'],
       description: {

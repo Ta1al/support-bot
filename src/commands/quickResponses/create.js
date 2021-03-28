@@ -4,6 +4,7 @@ module.exports = class aqrCommand extends Command {
     super('aqr', {
       channel: 'guild',
       category: 'Quick Responses',
+      userPermissions: 'MANAGE_MESSAGES',
       aliases: ['create-quick-response', 'aqr', 'cqr'],
       description: {
         content: 'Create a quick response',

@@ -90,7 +90,7 @@ class HelpCommand extends Command {
 
 function checkPermissions(msg, cmd) {
   if (msg.member ? msg.member.hasPermission(cmd.userPermissions) : true &&
-    (cmd.ownerOnly === true ? msg.author.id === config.owner : true) &&
+    (cmd.ownerOnly ? msg.author.id === config.owner : true) &&
     (cmd.channel === 'guild' && !msg.member ? false : true)) return true;
   return false;
 }
