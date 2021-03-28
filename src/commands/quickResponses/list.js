@@ -4,7 +4,7 @@ module.exports = class lqrCommand extends Command {
     super('lqr', {
       channel: 'guild',
       category: 'Quick Responses',
-      aliases: ['list-quick-response', 'lqr'],
+      aliases: ['list-quick-responses', 'list-quick-response', 'lqr'],
       description: {
         content: 'Get a list of quick responses*',
         usage: '[name/alias]'
