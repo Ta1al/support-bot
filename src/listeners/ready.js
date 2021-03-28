@@ -1,4 +1,4 @@
-const { Listener } = require('discord-akairo');
+const { Listener } = require('discord-akairo'), config = require('../../config.json');
 
 class ReadyListener extends Listener {
   constructor() {
@@ -10,6 +10,7 @@ class ReadyListener extends Listener {
 
   exec() {
     console.log(`${this.client.user.tag} is ready to serve!`);
+    this.client.user.setPresence(config.readyPresence);
   }
 }
 

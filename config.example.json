@@ -10,7 +10,13 @@
       "type": "WATCHING"
     }
   },
-
+  "readyPresence": {
+    "status": "online",
+    "activity": {
+     "name": "something cool",
+     "type": "WATCHING"   
+    }
+  },
   "bins": [
     "https://starb.in",
     "https://haste.red-panda.red/",
