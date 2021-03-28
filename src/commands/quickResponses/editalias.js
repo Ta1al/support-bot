@@ -49,8 +49,8 @@ class eqraCommand extends Command {
         start: `Enter an alias to ${addOrRemove}`,
         retry: () => {
           return addOrRemove === 'add' ?
-            '❌ A quick response with that name or alias already exists. Please try again.' :
-            '❌ This quick response does not have this alias';
+            '❌ A quick response with that name or alias already exists. Please enter a name/alias.' :
+            '❌ This quick response does not have this alias. Enter an alias to remove.';
         }
       }
     };

@@ -8,7 +8,7 @@ module.exports = class uqrCommand extends Command {
       description: {
         content: 'Use a quick response',
         usage: '<name/alias>',
-        note: `Quick responses can also be used like this: \`\`\`css\n${config.quickResponsePrefix}<name/alias>\`\`\``
+        note: `Quick responses can also be used like this: \`\`\`${config.quickResponsePrefix}<name/alias>\`\`\``
       },
       args: [
         {
