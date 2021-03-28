@@ -49,9 +49,8 @@ module.exports = class createTicketCommand extends Command {
     const t = await typeResolver2(msg, member.id);
     if(t) var ticket = t.find(a => a.guild === msg.guild.id);
     if (ticket) {
-      msg.reply(`❌ A ticket is already open for ${member.user.tag}`);
       const chnl = msg.client.channels.cache.get(ticket.channel);
-      return chnl.send(msg.author);
+      return msg.reply(`❌ A ticket is already open for ${member.user.tag} (${chnl})`);
     }
     const
       m = await msg.reply('⏳ Making a ticket, please wait.'),
@@ -81,7 +80,7 @@ module.exports = class createTicketCommand extends Command {
       .setFooter(member.id)
       .setTimestamp();
     const tMsg = await chnl.send(`Ticket for ${member.user} created by ${msg.author}`, embed);
-
+    tMsg.pin();
     const newTicket = {
       id: member.id,
       cMsg: m.id,
