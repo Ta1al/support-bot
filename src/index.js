@@ -48,6 +48,13 @@ class BotClient extends AkairoClient {
         if (result) return result;
         return null;
       },
+      dns: async (msg, str) => {
+        if (!str) return null;
+        const dns = await msg.client.db.get(msg.guild.id, 'dns', []);
+        const result = dns.find(q => q.name === str.toLowerCase() || q.dns === str.toLowerCase());
+        if (result) return result;
+        return null;
+      },
       sc: async (m, str) => {
         if (!str) return null;
         const scs = await m.client.db.get(m.guild.id, 'sc', []);
