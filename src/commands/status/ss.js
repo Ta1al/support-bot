@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 module.exports = class info extends Command {
   constructor() {
     super('ss', {
-      category: 'Utility',
+      category: 'Statuses',
       channel: 'guild',
       aliases: ['shard-status', 'ss'],
       description: {
