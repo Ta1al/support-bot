@@ -61,7 +61,7 @@ module.exports = class closeTicketCommand extends Command {
     ticket.closedBy = msg.author.id;
     ticket.closeReason = reason;
     await this.client.functions.ticket.close(this.client, gT.user, oldTicket, ticket);
-    await logChannel.send(`Ticket closed by ${msg.author.tag} (${msg.author.id})\n**Info**:\n${msg.channel.topic}\n**Question/Issue:** ${ticket.reason}\n**Closing Reason**: ${reason}\n**Invite:** ${ticket.invite}\n**Log**: ${haste}`);
+    await logChannel.send(`Ticket closed by ${msg.author.tag} (${msg.author.id})\n**Info**:\n${msg.channel.topic}\n**Question/Issue:** ${ticket.reason}\n**Closing Reason**: ${reason}\n**Invite:** ${ticket.invite}\n**Log**: ${haste}`, { files: [ { name: `${new Date().getTime()}.txt`, attachment: Buffer.from(log.join('\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n')) } ] });
     const sc = msg.client.channels.cache.get(sch.supportChannel);
     if (sc) {
       const m = await sc.messages.fetch(ticket.cMsg);
