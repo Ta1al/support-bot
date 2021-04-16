@@ -47,7 +47,7 @@ module.exports = class createTicketCommand extends Command {
     if (!category) return msg.reply(`❌ Ticket Category not found, please add category with command: \`${msg.util.parsed.prefix}esc ${msg.channel} <newTicketCategory>\``);
     const typeResolver2 = this.handler.resolver.type('ticket');
     const t = await typeResolver2(msg, member.id);
-    if(t) var ticket = t.find(a => a.guild === msg.guild.id);
+    if (t) var ticket = t.find(a => a.guild === msg.guild.id);
     if (ticket) {
       const chnl = msg.client.channels.cache.get(ticket.channel);
       return msg.reply(`❌ A ticket is already open for ${member.user.tag} (${chnl})`);
@@ -64,8 +64,6 @@ module.exports = class createTicketCommand extends Command {
       });
     await chnl.lockPermissions();
     await chnl.createOverwrite(member.user, { VIEW_CHANNEL: true });
-    await member.user.send(`Please send me an invite to your server for your ticket (${chnl})`)
-      .catch(() => chnl.send(`${member.user}, Please open your DMs and send me an invite to your server.`));
     const embed = this.client.util.embed()
       .setTitle('Ticket')
       .setDescription([
@@ -80,6 +78,8 @@ module.exports = class createTicketCommand extends Command {
       .setFooter(member.id)
       .setTimestamp();
     const tMsg = await chnl.send(`Ticket for ${member.user} created by ${msg.author}`, embed);
+    await member.user.send(`Please send me an invite to your server for your ticket (${chnl})`)
+      .catch(() => chnl.send('🆘 Please open your DMs and send me an invite to your server.'));
     tMsg.pin();
     const newTicket = {
       id: member.id,
@@ -97,9 +97,9 @@ module.exports = class createTicketCommand extends Command {
     };
 
     let guildTickets = await this.client.db.get(msg.guild.id, 'Tickets', []);
-    guildTickets = guildTickets.concat({ channel: chnl.id, user: member.id }); 
+    guildTickets = guildTickets.concat({ channel: chnl.id, user: member.id });
     await this.client.db.set(msg.guild.id, 'Tickets', guildTickets);
-    
+
     await this.client.functions.ticket.open(this.client, member.id, newTicket);
     return m.edit(`${msg.author}, ✅ Ticket created for ${member.user.tag}. | **Status:** Open`);
   }
