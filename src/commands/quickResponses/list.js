@@ -35,6 +35,6 @@ module.exports = class lqrCommand extends Command {
     }
     const qrs = await this.client.db.get(msg.guild.id, 'qr', []);
     if (!qrs.length) return msg.reply('❌ There are no quick responses');
-    return msg.reply('The following quick-responses are available: ' + qrs.map(q => `\`${q.name}\``).join(', '));
+    return msg.reply('The following quick-responses are available:\n' + qrs.sort((a, b) => (a.name > b.name) ? 1 : -1).map(q => `\`${q.name}\``).join(', '));
   }
 };
