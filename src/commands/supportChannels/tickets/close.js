@@ -50,7 +50,7 @@ module.exports = class closeTicketCommand extends Command {
     if (!logChannel) return msg.reply(`❌ The log channel does not exist, please add log channel with command: \`${msg.util.parsed.prefix}esc ${msg.channel} <newLogChannel>\``);
     await msg.reply('⏳ Closing ticket, please wait.');
     const msgs = await msg.channel.messages.fetch();
-    const reas = [`Info: ${msg.channel.topic}\nQuestion/Issue: ${ticket.reason}\nClosed By: ${msg.author.tag} (${msg.author.id})\nClose Reason: ${reason}\nInvite: ${ticket.invite}\n`];
+    const reas = [`Info: ${msg.channel.topic}\nQuestion/Issue: ${ticket.reason}\nClosed By: ${msg.author.tag} (${msg.author.id})\nClose Reason: ${reason}\nInvite: ${ticket.invite ? ticket.invite : '[Not provided]'}\n`];
     const arr = [];
     msgs.forEach(m => arr.push(`[${m.createdAt.toUTCString()}] ${m.author.tag}(${m.author.id}): ${m.content}${m.attachments.length > 0 ? `\n\nAttachments: ${m.attachments.map(a => a.url).join('\n')}` : ''}${m.embeds.length > 0 ? `\n\nEmbed: ${m.embeds.map(e => `${e.title}\n${e.description}\n${e.fields.map(f => `${f.name} : ${f.value}`).join('\n')}`).join('\n')}` : ''}`));
     arr.sort();
