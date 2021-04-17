@@ -24,7 +24,7 @@ module.exports = class lqrCommand extends Command {
   }
 
   async exec(msg, args) {
-    if (args.qr) {
+    if (args && args.qr) {
       const embed = this.client.util.embed()
         .setTitle(args.qr.name.toUpperCase())
         .setColor(config.color)
