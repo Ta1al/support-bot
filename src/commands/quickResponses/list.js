@@ -23,14 +23,14 @@ module.exports = class lqrCommand extends Command {
     });
   }
 
-  async exec(msg, { qr }) {
-    if (qr) {
+  async exec(msg, args) {
+    if (args.qr) {
       const embed = this.client.util.embed()
-        .setTitle(qr.name.toUpperCase())
+        .setTitle(args.qr.name.toUpperCase())
         .setColor(config.color)
         .setFooter(`Requested by ${msg.author.tag}`, msg.author.displayAvatarURL())
-        .setDescription(qr.text)
-        .addField('Aliases', qr.aliases.map(a => `\`${a}\``).join(', '));
+        .setDescription(args.qr.text)
+        .addField('Aliases', args.qr.aliases.map(a => `\`${a}\``).join(', '));
       return msg.channel.send(embed);
     }
     const qrs = await this.client.db.get(msg.guild.id, 'qr', []);
