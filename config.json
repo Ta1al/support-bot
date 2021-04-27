@@ -1,0 +1,48 @@
+{
+    "owner": "462870395314241537",
+    "guild": "449576301997588490",
+    "color": "0x11b5eb",
+    "prefix": "?",
+    "ticketPrefix": "-",
+    "quickResponsePrefix": ".",
+    "startupPresence": {
+        "status": "idle",
+        "activity": {
+            "name": "a loading bar",
+            "type": "WATCHING"
+        }
+    },
+    "readyPresence": {
+        "status": "online",
+        "activity": {
+            "name": "promise.solutions",
+            "type": "WATCHING"
+        }
+    },
+    "bins": [
+        "https://hastebin.but-it-actually.works",
+        "https://starb.in",
+        "https://haste.red-panda.red/",
+        "https://paste.hep.gg/",
+        "https://hastebin.com",
+        "https://haste.rauf.wtf/"
+    ],
+    "commandPrompt": {
+        "retries": 3,
+        "time": 30e3,
+        "cancelWord": "cancel",
+        "stopWord": "stop",
+        "start": "⏳ Please enter an argument.",
+        "retry": "⚠ Please enter a correct argument.",
+        "ended": "🔥 Retry limit reached. Command canceled.",
+        "timeout": "❌ Command timed out.",
+        "cancel": "🔥 Command canceled."
+    },
+    "modifyCommandPrompt": {
+        "start": ">>> Type `cancel` to cancel the command,",
+        "retry": ">>> Type `cancel` to cancel the command."
+    },
+    "strings": {
+        "ArgumentParsingFailure": "❌ Argument Parsing Failed!"
+    }
+}
