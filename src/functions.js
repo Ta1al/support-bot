@@ -84,7 +84,7 @@ module.exports = {
     if (days) str = `${str + days} day${days > 1 ? 's' : ''} `;
     if (hours) str = `${str + hours} hour${hours > 1 ? 's' : ''} `;
     if (minutes) str = `${str + minutes} minute${minutes > 1 ? 's' : ''} `;
-    if (sec) str = `${str + sec} second${sec > 1 ? 's' : ''} `;
+    if (sec) str = `${str + sec} second${sec > 1 ? 's' : ''}`;
   
     return str;
   }

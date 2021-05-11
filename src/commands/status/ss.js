@@ -19,15 +19,16 @@ module.exports = class info extends Command {
     const m = await msg.reply('⌛ Hold on...');
     const arr = [];
     for (const obj of dnss) {
-      const data = await fetch(obj.dns).then(r => r.json()).catch(e => { if (e) return '❌ Error'; });
-      if (data !== '❌ Error') {
-        const [ready, connecting, reconnecting, idling, nearly, disconnecting, waiting, identifying, resuming] = [[], [], [], [], [], [], [], [], []], loading = [];
+      const data = await fetch(obj.dns).then(r => r.json()).catch();
+      if (data) {
+        const [ready, connecting, reconnecting, idling, nearly, disconnecting, waiting, identifying, resuming] = [[], [], [], [], [], [], [], [], []], loading = [],
+          lastUpdate = this.client.functions.msToTime((new Date().getTime()) - data.lastUpdate);
         Object.keys(data.shards).forEach(sh => {
           if (data.shards[sh].loading) loading.push(sh);
           [ready, connecting, reconnecting, idling, nearly, disconnecting, waiting, identifying, resuming][data.shards[sh].status].push(sh);
         });
         const b = [
-          `__**${obj.name.toUpperCase()}**__\n`,
+          `__**${obj.name.toUpperCase()}**__ (Last updated: ${lastUpdate ? `${lastUpdate} ago` : 'Just Now'})\n`,
           loading.length ? `**Loading:** ${loading.join(', ')}\n` : '',
           ready.length ? `**Ready:** ${ready.join(', ')}\n` : '',
           connecting.length ? `**Connecting:** ${connecting.join(', ')}\n` : '',
