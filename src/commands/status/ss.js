@@ -23,7 +23,7 @@ module.exports = class info extends Command {
       if (data !== '❌ Error') {
         const [ready, connecting, reconnecting, idling, nearly, disconnecting, waiting, identifying, resuming] = [[], [], [], [], [], [], [], [], []], loading = [];
         Object.keys(data.shards).forEach(sh => {
-          if (sh.loading) loading.push(sh);
+          if (data.shards[sh].loading) loading.push(sh);
           [ready, connecting, reconnecting, idling, nearly, disconnecting, waiting, identifying, resuming][data.shards[sh].status].push(sh);
         });
         const b = [
